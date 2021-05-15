@@ -9,24 +9,28 @@ router.setState = function(state, post) {
   var body = document.querySelector('body');
   var header = document.querySelector('h1');
 
+  //change state to settings
   if(state == "settings"){
-    body.className = "settings";
-    header.textContent = "Settings";
-    window.history.pushState({page: "settings"}, "settings", "#settings");
+    body.className = "settings"; //style body
+    header.textContent = "Settings"; //change header text
+    window.history.pushState({page: "settings"}, "settings", "#settings"); //push state and change URL
+
+  //change state to home
   }else if(state == "home"){
-    body.className = "";
-    header.textContent = "Journal Entries";
-    window.history.pushState({page: "home"}, "home", window.location.pathname + window.location.search);
+    body.className = ""; //style body
+    header.textContent = "Journal Entries"; //change header text
+    window.history.pushState({page: "home"}, "home", window.location.pathname + window.location.search);  //push state and change URL
+
+  //change state to entries
   }else if(state == "entries"){
-
     var entryNum = post.getAttribute("entry-num");
-    body.className = "single-entry";
-    header.textContent = `Entry ${entryNum}`;
-    window.history.pushState({page: `entry-${entryNum}`}, `Entry-${entryNum}`, `#entry${entryNum}`);
+    body.className = "single-entry"; //style body
+    header.textContent = `Entry ${entryNum}`; //change header text
+    window.history.pushState({page: `entry-${entryNum}`}, `Entry-${entryNum}`, `#entry${entryNum}`);  //push state and change URL
 
-    document.querySelector('entry-page').remove(); 
-    body.appendChild(document.createElement('entry-page')); 
-    document.querySelector('entry-page').entry = post.entry;
+    document.querySelector('entry-page').remove(); //delete entry page
+    body.appendChild(document.createElement('entry-page')); //create new blank entry page
+    document.querySelector('entry-page').entry = post.entry; //enter page content
   }
 
   /**
