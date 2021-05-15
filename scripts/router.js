@@ -33,6 +33,7 @@ router.setState = function(state, post) {
     document.querySelector('entry-page').entry = post.entry; //enter page content
   }
 
+  
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
