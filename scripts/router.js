@@ -5,7 +5,7 @@ export const router = {};
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function(state, post) {
+router.setState = function(state, newState, entry) {
   var body = document.querySelector('body');
   var header = document.querySelector('h1');
 
@@ -13,26 +13,31 @@ router.setState = function(state, post) {
   if(state == "settings"){
     body.className = "settings"; //style body
     header.textContent = "Settings"; //change header text
-    window.history.pushState({page: "settings"}, "settings", "#settings"); //push state and change URL
+    if(newState){
+      window.history.pushState({page: "settings"}, "settings", "#settings"); //push state and change URL
+    }
 
   //change state to home
   }else if(state == "home"){
     body.className = ""; //style body
     header.textContent = "Journal Entries"; //change header text
-    window.history.pushState({page: "home"}, "home", window.location.pathname + window.location.search);  //push state and change URL
+    if(newState){
+      window.history.pushState({page: "home"}, "home", window.location.pathname + window.location.search);  //push state and change URL
+    }
 
   //change state to entries
   }else if(state == "entries"){
-    var entryNum = post.getAttribute("entry-num");
+    //var entryNum = entry.getAttribute("entry-num");
+    var entryNum = entry.num;
     body.className = "single-entry"; //style body
     header.textContent = `Entry ${entryNum}`; //change header text
-    window.history.pushState({page: `entry-${entryNum}`}, `Entry-${entryNum}`, `#entry${entryNum}`);  //push state and change URL
-
+    if(newState){
+      window.history.pushState({page: "entries", entry}, `Entry-${entryNum}`, `#entry${entryNum}`);  //push state and change URL
+    }
     document.querySelector('entry-page').remove(); //delete entry page
     body.appendChild(document.createElement('entry-page')); //create new blank entry page
-    document.querySelector('entry-page').entry = post.entry; //enter page content
+    document.querySelector('entry-page').entry = entry; //enter page content
   }
-
   
   /**
    * - There are three states that your SPA app will have

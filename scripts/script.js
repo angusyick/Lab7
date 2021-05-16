@@ -25,41 +25,34 @@ document.addEventListener('DOMContentLoaded', () => {
       entries.forEach(entry => {
         let newPost = document.createElement('journal-entry');
         entryNum++;
-        newPost.setAttribute("entry-num", entryNum); //sets attribute to know entry number
+        // newPost.entry.setAttribute("entry-num", entryNum); //sets attribute to know entry number
+        entry.num = entryNum;
         newPost.entry = entry;
         document.querySelector('main').appendChild(newPost);
 
         //if entry is clicked go to entry state
         newPost.addEventListener('click', function(){
-          setState("entries", this);
+          setState("entries", true, entry);
         });
       });
     });
 
   window.onpopstate = function(event){
-    // if(event.state == null || `${JSON.stringify(event.state)}` == `{"page":"home"}`){
-    //   setState("home");
-    // }else if(`${JSON.stringify(event.state)}` == `{"page":"settings"}`){
-    //   setState("settings");
-    // }
-    if(event.state == null || event.state.page == "home"){
-      setState("home");
-    }else if(event.state.page == "settings"){
-      setState("settings");
+    if(event.state == null){
+      setState("home", false);
+    }else{
+      setState(event.state.page, false, event.state.entry);
     }
-    // else if(event.state == "entry"){
-    //   setState();
-    // }
   };
 
   //if settings is clicked, go to settings state
   document.querySelector('img').addEventListener('click', function(){
-    setState("settings");
+    setState("settings", true);
   });
 
   //if header is clicked, go to home state
   document.querySelector('h1').addEventListener('click', function(){
-    setState("home");
+    setState("home", true);
   });
   
 });
